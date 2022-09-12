@@ -4,6 +4,7 @@ pipeline {
         registry = 'sdrdocker334/flask_app'
         registryCredentials = 'docker'
         cluster_name = 'skillstorm'
+        namepace = 'sdrkube'
     }
 =======
 >>>>>>> ee092bbc341d81d9665af5d6976e39dce6d45795
