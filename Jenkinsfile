@@ -5,6 +5,7 @@ pipeline {
         cluster_name = 'skillstorm'
         namespace = 'sdrkube'
     }
+
   agent {
     node {
       label 'docker'
@@ -17,23 +18,23 @@ pipeline {
         git(url: 'https://github.com/SDR-sec/Flasking', branch: 'main')
       }
     }
-
 stage('Build Stage') {
         steps {
             script {
                 dockerImage = docker.build(registry)
             }
         }
-}
-stage('Deploy Stage')
+    }
+stage('Deploy Stage') {
     steps {
         script {
-            docker.withRegistry('', registryCredentials)
+            docker.withRegistry('', registryCredentials) {
                 dockerImage.push()
         }
+      }
     }
-}
-stage('Kubernetes'){
+  }
+stage('Kubernetes') {
   steps {
     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
       sh "aws eks update-kubeconfig --region us-east-1 --name ${cluster_name}"
@@ -50,3 +51,4 @@ stage('Kubernetes'){
       }
     }
   }
+}
