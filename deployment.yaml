@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name:  flaskcontainer
-        image:  sdr-sec/flasking/flask_app
+        image:  sdrdocker334/flask_app
         resources:
           requests:
             cpu: 100m
@@ -41,7 +41,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: flaskcontainer
-  namespace: valeriedarling
+  namespace: sdrkube
 spec:
   selector:
     app: flaskcontainer

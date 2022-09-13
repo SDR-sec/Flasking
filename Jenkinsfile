@@ -3,7 +3,7 @@ pipeline {
         registry = 'sdrdocker334/flask_app'
         registryCredentials = 'docker'
         cluster_name = 'skillstorm'
-        namepace = 'sdrkube'
+        namespace = 'sdrkube'
     }
   agent {
     node {
@@ -25,7 +25,7 @@ stage('Build Stage') {
             }
         }
 }
-stage('Deploy Stage'){
+stage('Deploy Stage')
     steps {
         script {
             docker.withRegistry('', registryCredentials)
@@ -33,7 +33,7 @@ stage('Deploy Stage'){
         }
     }
 }
-stage('Kubernetes') {
+stage('Kubernetes'){
   steps {
     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
       sh "aws eks update-kubeconfig --region us-east-1 --name ${cluster_name}"
@@ -50,4 +50,3 @@ stage('Kubernetes') {
       }
     }
   }
-}
